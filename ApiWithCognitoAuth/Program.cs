@@ -21,8 +21,9 @@ builder.Services
         options.Authority = builder.Configuration["AWSCognito:Authority"];
         options.TokenValidationParameters = new TokenValidationParameters
         {
-            ValidateIssuerSigningKey = false,
-            ValidateAudience = false
+            ValidateIssuerSigningKey = true,
+            ValidateAudience = false,
+            ValidIssuer = builder.Configuration["AWSCognito:Authority"],
         };
     });
 
