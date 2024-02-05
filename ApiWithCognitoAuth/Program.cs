@@ -18,14 +18,14 @@ builder.Services
     })
     .AddJwtBearer(options =>
     {
-        options.SaveToken = true;
         options.Authority = builder.Configuration["AWSCognito:Authority"];
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateAudience = false,
             ValidateIssuer = true,
-            ValidIssuer = builder.Configuration["AWSCognito:Authority"] + "/v2.0",
-            ValidIssuers = new List<string> { builder.Configuration["AWSCognito:Authority"] }
+            ValidIssuer = builder.Configuration["AWSCognito:Authority"],
+            ValidateLifetime = true,
+            LifetimeValidator = (before, expires, token, param) => expires > DateTime.UtcNow,
         };
     });
 
