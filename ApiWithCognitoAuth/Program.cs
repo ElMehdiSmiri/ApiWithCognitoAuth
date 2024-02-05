@@ -19,12 +19,13 @@ builder.Services
     .AddJwtBearer(options =>
     {
         options.Authority = builder.Configuration["AWSCognito:Authority"];
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuerSigningKey = true,
-            ValidateAudience = false,
-            ValidIssuer = builder.Configuration["AWSCognito:Authority"],
-        };
+        options.Audience = builder.Configuration["AWSCognito:ClientId"];
+        //options.TokenValidationParameters = new TokenValidationParameters
+        //{
+        //    ValidateIssuerSigningKey = false,
+        //    ValidateAudience = false,
+        //    ValidIssuer = builder.Configuration["AWSCognito:Authority"]
+        //};
     });
 
 
