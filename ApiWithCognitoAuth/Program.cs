@@ -11,26 +11,36 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 //builder.Services.AddCognitoIdentity();
+//builder.Services
+//    .AddAuthentication(options =>
+//    {
+//        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+//        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+//    })
+//    .AddJwtBearer(options =>
+//    {
+//        options.Authority = builder.Configuration["AWSCognito:Authority"];
+//        options.TokenValidationParameters = new TokenValidationParameters
+//        {
+//            ValidateAudience = false,
+//            ValidIssuer = builder.Configuration["AWSCognito:Authority"],
+//            ValidateIssuer = true,
+//            ValidateIssuerSigningKey = true,
+//            ValidateLifetime = true,
+//            LifetimeValidator = (before, expires, token, param) => expires > DateTime.UtcNow,
+//        };
+//    });
+
 builder.Services
-    .AddAuthentication(options =>
-    {
-        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-    })
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
         options.Authority = builder.Configuration["AWSCognito:Authority"];
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateAudience = false,
-            ValidIssuer = builder.Configuration["AWSCognito:Authority"],
-            ValidateIssuer = true,
-            ValidateIssuerSigningKey = true,
-            ValidateLifetime = true,
-            LifetimeValidator = (before, expires, token, param) => expires > DateTime.UtcNow,
         };
     });
-
 
 // Builder
 var app = builder.Build();
