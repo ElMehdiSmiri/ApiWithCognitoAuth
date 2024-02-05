@@ -22,8 +22,9 @@ builder.Services
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateAudience = false,
-            ValidateIssuer = true,
             ValidIssuer = builder.Configuration["AWSCognito:Authority"],
+            ValidateIssuer = true,
+            ValidateIssuerSigningKey = true,
             ValidateLifetime = true,
             LifetimeValidator = (before, expires, token, param) => expires > DateTime.UtcNow,
         };
